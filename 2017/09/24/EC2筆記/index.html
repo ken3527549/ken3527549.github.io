@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>EC2筆記 | ken3527549&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="What Is Amazon EC2? Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the Amazon Web Services (AWS) cloud. Using Amazon EC2 eliminates your need to invest in hardware u">
+<meta name="keywords" content="AWS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EC2筆記">
+<meta property="og:url" content="https://ken3527549.github.io/2017/09/24/EC2筆記/index.html">
+<meta property="og:site_name" content="ken3527549&#39;s Blog">
+<meta property="og:description" content="What Is Amazon EC2? Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the Amazon Web Services (AWS) cloud. Using Amazon EC2 eliminates your need to invest in hardware u">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/images/instance_lifecycle.png">
+<meta property="og:image" content="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/images/architecture_storage.png">
+<meta property="og:updated_time" content="2017-10-05T15:14:08.720Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EC2筆記">
+<meta name="twitter:description" content="What Is Amazon EC2? Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the Amazon Web Services (AWS) cloud. Using Amazon EC2 eliminates your need to invest in hardware u">
+<meta name="twitter:image" content="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/images/instance_lifecycle.png">
+    
+
+    
+        <link rel="alternate" href="/" title="ken3527549&#39;s Blog" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">ken3527549&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/smiley, ghost, happy, friendly, spirit, casper, halloween png icon.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: 'Pages',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/smiley, ghost, happy, friendly, spirit, casper, halloween png icon.png" />
+            <h2 id="name">ken3527549</h2>
+            <h3 id="title">Back-End Developer &amp; Designer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Taipei, Taiwan</span>
+            <a id="follow" target="_blank" href="">關注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                11
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                3
+                <span>標籤</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="/" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="youtube" class=tooltip>
+                            <i class="fa fa-youtube"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-EC2筆記" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            EC2筆記
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/09/24/EC2筆記/">
+            <time datetime="2017-09-24T03:29:19.000Z" itemprop="datePublished">2017-09-24</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/AWS/">AWS</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h1 id="What-Is-Amazon-EC2"><a href="#What-Is-Amazon-EC2" class="headerlink" title="What Is Amazon EC2?"></a>What Is Amazon EC2?</h1><ul>
+<li>Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the Amazon Web Services (AWS) cloud.</li>
+<li>Using Amazon EC2 eliminates your need to invest in hardware up front, so you can develop and deploy applications faster.</li>
+<li>You can use Amazon EC2 to launch as many or as few virtual servers as you need, configure security and networking, and manage storage.</li>
+<li>Amazon EC2 enables you to scale up or down to handle changes in requirements or spikes in popularity, reducing your need to forecast traffic.</li>
+</ul>
+<p><strong>EC2功能</strong></p>
+<ul>
+<li>虛擬計算環境，稱為實例(Instance)。</li>
+<li>Preconfigured templates for your instances, known as Amazon Machine Images (AMIs), that package the bits you need for your server (including the operating system and additional software)</li>
+<li>Various configurations of CPU, memory, storage, and networking capacity for your instances, known as <em>instance types</em></li>
+<li>Secure login information for your instances using key pairs (AWS stores the public key, and you store the private key in a secure place)</li>
+<li>Storage volumes for temporary data that’s deleted when you stop or terminate your instance, known as instance store volumes</li>
+<li>Persistent storage volumes for your data using Amazon Elastic Block Store (Amazon EBS), known as Amazon EBS volumes</li>
+<li>Multiple physical locations for your resources, such as instances and Amazon EBS volumes, known as regions and Availability Zones</li>
+<li>A firewall that enables you to specify the protocols, ports, and source IP ranges that can reach your instances using security groups</li>
+<li>Static IPv4 addresses for dynamic cloud computing, known as Elastic IP addresses</li>
+<li>Metadata, known as tags, that you can create and assign to your Amazon EC2 resources</li>
+<li>Virtual networks you can create that are logically isolated from the rest of the AWS cloud, and that you can optionally connect to your own network, known as virtual private clouds (VPCs)</li>
+</ul>
+<p><strong>Basics</strong></p>
+<ul>
+<li>實例和AMI</li>
+<li>區域和可用區</li>
+<li>實例類型(Instance types)</li>
+<li>標籤</li>
+</ul>
+<p><strong>Networking and Security</strong></p>
+<ul>
+<li>Key pair</li>
+<li>Sercurity Group</li>
+<li>Elastic IP address</li>
+<li>EC2 and VPC</li>
+</ul>
+<p><strong>Storage</strong></p>
+<ul>
+<li>EBS</li>
+<li>Instance Store</li>
+</ul>
+<h2 id="Related-Services"><a href="#Related-Services" class="headerlink" title="Related Services"></a>Related Services</h2><ul>
+<li><a href="http://docs.aws.amazon.com/autoscaling/latest/userguide/WhatIsAutoScaling.html" target="_blank" rel="external">Auto Scaling User Guide</a></li>
+<li><a href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html" target="_blank" rel="external">AWS CloudFormation User Guide</a></li>
+<li><a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html" target="_blank" rel="external">AWS Elastic Beanstalk Developer Guide</a></li>
+<li><a href="http://docs.aws.amazon.com/opsworks/latest/userguide/welcome.html" target="_blank" rel="external">AWS OpsWorks User Guide</a></li>
+</ul>
+<p>參考<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html" target="_blank" rel="external">concepts</a></p>
+<h1 id="Best-Practices-for-Amazon-EC2"><a href="#Best-Practices-for-Amazon-EC2" class="headerlink" title="Best Practices for Amazon EC2"></a>Best Practices for Amazon EC2</h1><p>This checklist is intended to help you get the maximum benefit from and satisfaction with Amazon EC2.</p>
+<ul>
+<li>Security and Network<ul>
+<li>使用IAM</li>
+<li>用最嚴格的SG</li>
+<li>定期更新實例上的系統和軟體</li>
+<li>在VPC中啟動實例(而不是EC2-classic)。</li>
+</ul>
+</li>
+<li>Storage<ul>
+<li>Understand the implications of the <em>root device type</em> for data persistence, backup, and recovery.</li>
+<li>使用EBS以確保實例終止後數據可以保留。</li>
+<li>Use the instance store available for your instance to store temporary data. </li>
+</ul>
+</li>
+<li>Resource Management<ul>
+<li>Use instance metadata and custom resource tags to track and identify your AWS resources.</li>
+<li>View your current limits for Amazon EC2.</li>
+</ul>
+</li>
+<li>Backup and Recovery<ul>
+<li>使用EBS快照備份EBS，並為實例創建AMI。</li>
+<li>掛多個可用區部屬關鍵元件，並適當備份數據。</li>
+<li>Design your applications to handle dynamic IP addressing when your instance restarts.</li>
+<li>Monitor and respond to events.</li>
+<li>Ensure that you are prepared to handle failover. For a basic solution, you can manually attach a network interface or Elastic IP address to a replacement instance.</li>
+<li>定期測試實例和EBS發生故障時的恢復過程(AMI和EBS快照)。</li>
+</ul>
+</li>
+</ul>
+<p>參考<a href="http://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-best-practices.html" target="_blank" rel="external">EC2 best practices</a></p>
+<h2 id="AMI-Types"><a href="#AMI-Types" class="headerlink" title="AMI Types"></a>AMI Types</h2><ul>
+<li>Region (see Regions and Availability Zones)</li>
+<li>Operating system</li>
+<li>Architecture (32-bit or 64-bit)</li>
+<li>Launch Permissions<ul>
+<li>public: The owner grants launch permissions to all AWS accounts.</li>
+<li>explicit: The owner grants launch permissions to specific AWS accounts.</li>
+<li>implicit: The owner has implicit launch permissions for an AMI.</li>
+</ul>
+</li>
+<li>Storage for the Root Device</li>
+</ul>
+<h2 id="Storage-for-the-Root-Device"><a href="#Storage-for-the-Root-Device" class="headerlink" title="Storage for the Root Device"></a>Storage for the Root Device</h2><p>AMI可分成兩類：</p>
+<h4 id="backed-by-Amazon-EBS"><a href="#backed-by-Amazon-EBS" class="headerlink" title="backed by Amazon EBS"></a>backed by Amazon EBS</h4><ul>
+<li>root device for an instance launched from the AMI is an Amazon EBS volume created from an Amazon EBS snapshot</li>
+<li>16 TiB Size limit</li>
+<li>Usually less than 1 minute Boot time</li>
+<li>By default, the root volume is deleted when the instance terminates</li>
+<li>Data on any other Amazon EBS volumes persists after instance termination by default</li>
+<li>Data on any instance store volumes persists only during the life of the instance</li>
+<li>Upgrading: <strong>The instance type, kernel, RAM disk, and user data can be changed while the instance is stopped</strong></li>
+<li>You’re charged for instance usage, Amazon EBS volume usage, and storing your AMI as an Amazon EBS snapshot.</li>
+<li>AMI creation/bundling: Uses a single command/call</li>
+<li>Stopped state: Can be placed in stopped state where instance is not running, but the root volume is persisted in Amazon EBS<h4 id="backed-by-instance-store"><a href="#backed-by-instance-store" class="headerlink" title="backed by instance store"></a>backed by instance store</h4></li>
+<li>root device for an instance launched from the AMI is an instance store volume created from a template stored in Amazon S3</li>
+<li>10 GiB Size limit</li>
+<li>Usually less than 5 minutes Boot time</li>
+<li>Data on any instance store volumes persists only during the life of the instance.</li>
+<li>Data on any Amazon EBS volumes persists after instance termination by default</li>
+<li>Instance attributes are fixed for the life of an instance.</li>
+<li>Upgrading: <strong>Instance attributes are fixed for the life of an instance.</strong></li>
+<li>You’re charged for instance usage and storing your AMI in Amazon S3.</li>
+<li>AMI creation/bundling: Requires installation and use of AMI tools</li>
+<li>Stopped state: <strong>Cannot be in stopped state;</strong> instances are running or terminated<br>參考<a href="http://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ComponentsAMIs.html" target="_blank" rel="external">ComponentsAMIs</a></li>
+</ul>
+<h2 id="Linux-AMI-Virtualization-Types"><a href="#Linux-AMI-Virtualization-Types" class="headerlink" title="Linux AMI Virtualization Types"></a>Linux AMI Virtualization Types</h2><h2 id="Finding-a-Linux-AMI"><a href="#Finding-a-Linux-AMI" class="headerlink" title="Finding a Linux AMI"></a>Finding a Linux AMI</h2><ul>
+<li>The region</li>
+<li>The operating system</li>
+<li>The architecture: 32-bit (i386) or 64-bit (x86_64)</li>
+<li>The root device type: Amazon EBS or instance store</li>
+<li>The provider: Amazon Web Services, Oracle, IBM, Microsoft, or the community</li>
+</ul>
+<h2 id="Shared-AMIs"><a href="#Shared-AMIs" class="headerlink" title="Shared AMIs"></a>Shared AMIs</h2><h2 id="Guidelines-for-Shared-Linux-AMIs"><a href="#Guidelines-for-Shared-Linux-AMIs" class="headerlink" title="Guidelines for Shared Linux AMIs"></a>Guidelines for Shared Linux AMIs</h2><ul>
+<li>Update the AMI Tools at Boot Time</li>
+<li>Disable Password-Based Remote Logins for Root</li>
+<li>Disable Local Root Access</li>
+<li>Remove SSH Host Key Pairs</li>
+<li>Install Public Key Credentials</li>
+<li>Disabling sshd DNS Checks (Optional)</li>
+<li>Identify Yourself</li>
+<li>Protect Yourself<br>參考<a href="http://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/building-shared-amis.html" target="_blank" rel="external">building-shared-amis</a></li>
+</ul>
+<h2 id="Amazon-EC2-Instances"><a href="#Amazon-EC2-Instances" class="headerlink" title="Amazon EC2 Instances"></a>Amazon EC2 Instances</h2><p>Before you launch a production environment, you need to answer the following questions.</p>
+<ul>
+<li>What instance type best meets my needs?</li>
+<li>What purchasing option best meets my needs?</li>
+<li>Which type of root volume meets my needs?</li>
+<li>Would I benefit from using a virtual private cloud?</li>
+<li>Can I remotely manage a fleet of EC2 instances and machines in my hybrid environment?</li>
+</ul>
+<h2 id="Instance-Purchasing-Options"><a href="#Instance-Purchasing-Options" class="headerlink" title="Instance Purchasing Options"></a>Instance Purchasing Options</h2><ul>
+<li>On-Demand instances(按需實例)<ul>
+<li>按小時為您啟動的實例付費</li>
+</ul>
+</li>
+<li>Reserved Instances(預留實例)<ul>
+<li>以大幅折扣購買一年期到三年期的始終可用的實例</li>
+</ul>
+</li>
+<li>Scheduled Instances(計畫實例)<ul>
+<li>以一年為期限購買按指定重複計劃始終可用的實例</li>
+</ul>
+</li>
+<li>Spot instances(競價型實例)<ul>
+<li>對未使用的實例競價，只要這些實例可用且您的出價高於現貨價格，就可以以大幅折扣運行這些實例</li>
+</ul>
+</li>
+<li>Dedicated hosts(專用主機)<ul>
+<li>為完全專用於運行您的實例的物理主機付費，通過您現有的按套接字、按內核或按 VM 的軟件許可證來降低成本</li>
+</ul>
+</li>
+<li>Dedicated instances(專用實例)<ul>
+<li>按小時付費的在單一租戶硬件上運行的實例</li>
+</ul>
+</li>
+</ul>
+<p>參考<a href="http://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/instance-purchasing-options.html" target="_blank" rel="external">instance-purchasing-options</a></p>
+<h2 id="Instance-Lifecycle"><a href="#Instance-Lifecycle" class="headerlink" title="Instance Lifecycle"></a>Instance Lifecycle</h2><p>The purchasing option that you choose affects the lifecycle of the instance</p>
+<p>Notice that you can’t stop and start an instance store-backed instance<br><img src="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/images/instance_lifecycle.png" alt="Instance Lifecycle"></p>
+<p>參考<a href="http://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html" target="_blank" rel="external">ec2-instance-lifecycle</a></p>
+<h2 id="Storage"><a href="#Storage" class="headerlink" title="Storage"></a>Storage</h2><ul>
+<li>Amazon EBS<ul>
+<li>use Amazon EBS as a primary storage device for data that requires frequent and granular updates(ex:run a database on an instance.)</li>
+</ul>
+</li>
+<li>Instance Store<ul>
+<li>The data on an instance store volume persists only during the life of the associated instance; if you stop or terminate an instance, any data on instance store volumes is lost.</li>
+</ul>
+</li>
+<li>Amazon EFS<ul>
+<li>use an EFS file system as a common data source for workloads and applications running on multiple instances.</li>
+</ul>
+</li>
+<li>Amazon S3<ul>
+<li>use Amazon S3 to store backup copies of your data and applications.<br><img src="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/images/architecture_storage.png" alt="architecture_storage"></li>
+</ul>
+</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://ken3527549.github.io/2017/09/24/EC2筆記/" data-id="cj8els5da0002v0usyupyr6vb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/10/05/S3筆記/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    S3筆記
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/09/24/RDS筆記/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">RDS筆記</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/10/05/S3筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/10/05/S3筆記/" class="title">S3筆記</a></p>
+                            <p class="item-date"><time datetime="2017-10-05T13:32:42.000Z" itemprop="datePublished">2017-10-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/24/EC2筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/24/EC2筆記/" class="title">EC2筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-24T03:29:19.000Z" itemprop="datePublished">2017-09-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/24/RDS筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/24/RDS筆記/" class="title">RDS筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-24T01:36:12.000Z" itemprop="datePublished">2017-09-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/18/建立雲端架構：AWS-最佳實務/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/18/建立雲端架構：AWS-最佳實務/" class="title">建立雲端架構：AWS 最佳實務</a></p>
+                            <p class="item-date"><time datetime="2017-09-17T15:30:08.000Z" itemprop="datePublished">2017-09-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/17/VPC筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/17/VPC筆記/" class="title">VPC筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-17T05:34:42.000Z" itemprop="datePublished">2017-09-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">歸檔</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">10</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sdf/">sdf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whitepaper/">whitepaper</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤雲</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/AWS/" style="font-size: 20px;">AWS</a> <a href="/tags/sdf/" style="font-size: 10px;">sdf</a> <a href="/tags/whitepaper/" style="font-size: 10px;">whitepaper</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">連結</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 ken3527549<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

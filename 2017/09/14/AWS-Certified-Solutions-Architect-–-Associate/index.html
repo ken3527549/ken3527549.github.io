@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Certified Solutions Architect – Associate | ken3527549&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="準備考試前： 考試範圍 實作練習重點 EC2 S3 VPC Route 53 RDS SQS   實作可從以下資源著手： User Guide Developer Guide Whitepapers AWS Developer Forums    準備資料官方建議資料：考試建議的途徑 培訓培訓 考試指南考試指南 實作練習qwiklabs AWS 白皮書AWS 白皮書的特色是提供完整豐富的 AWS">
+<meta name="keywords" content="AWS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Certified Solutions Architect – Associate">
+<meta property="og:url" content="https://ken3527549.github.io/2017/09/14/AWS-Certified-Solutions-Architect-–-Associate/index.html">
+<meta property="og:site_name" content="ken3527549&#39;s Blog">
+<meta property="og:description" content="準備考試前： 考試範圍 實作練習重點 EC2 S3 VPC Route 53 RDS SQS   實作可從以下資源著手： User Guide Developer Guide Whitepapers AWS Developer Forums    準備資料官方建議資料：考試建議的途徑 培訓培訓 考試指南考試指南 實作練習qwiklabs AWS 白皮書AWS 白皮書的特色是提供完整豐富的 AWS">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2017-09-17T05:32:00.189Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Certified Solutions Architect – Associate">
+<meta name="twitter:description" content="準備考試前： 考試範圍 實作練習重點 EC2 S3 VPC Route 53 RDS SQS   實作可從以下資源著手： User Guide Developer Guide Whitepapers AWS Developer Forums    準備資料官方建議資料：考試建議的途徑 培訓培訓 考試指南考試指南 實作練習qwiklabs AWS 白皮書AWS 白皮書的特色是提供完整豐富的 AWS">
+    
+
+    
+        <link rel="alternate" href="/" title="ken3527549&#39;s Blog" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">ken3527549&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/smiley, ghost, happy, friendly, spirit, casper, halloween png icon.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: 'Pages',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/smiley, ghost, happy, friendly, spirit, casper, halloween png icon.png" />
+            <h2 id="name">ken3527549</h2>
+            <h3 id="title">Back-End Developer &amp; Designer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Taipei, Taiwan</span>
+            <a id="follow" target="_blank" href="">關注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                11
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                3
+                <span>標籤</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="/" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="youtube" class=tooltip>
+                            <i class="fa fa-youtube"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-AWS-Certified-Solutions-Architect-–-Associate" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Certified Solutions Architect – Associate
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/09/14/AWS-Certified-Solutions-Architect-–-Associate/">
+            <time datetime="2017-09-13T15:01:44.000Z" itemprop="datePublished">2017-09-14</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/AWS/">AWS</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="準備考試前："><a href="#準備考試前：" class="headerlink" title="準備考試前："></a>準備考試前：</h2><ul>
+<li>考試範圍</li>
+<li>實作練習重點<ul>
+<li>EC2</li>
+<li>S3</li>
+<li>VPC</li>
+<li>Route 53</li>
+<li>RDS</li>
+<li>SQS</li>
+</ul>
+</li>
+<li>實作可從以下資源著手：<ul>
+<li>User Guide</li>
+<li>Developer Guide</li>
+<li><a href="https://aws.amazon.com/tw/whitepapers/" target="_blank" rel="external">Whitepapers</a></li>
+<li><a href="">AWS Developer Forums</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="準備資料"><a href="#準備資料" class="headerlink" title="準備資料"></a>準備資料</h2><p>官方建議資料：<a href="https://aws.amazon.com/tw/certification/certification-prep/" target="_blank" rel="external">考試建議的途徑</a></p>
+<h4 id="培訓"><a href="#培訓" class="headerlink" title="培訓"></a>培訓</h4><p><a href="https://aws.amazon.com/training/course-descriptions/architect/" target="_blank" rel="external">培訓</a></p>
+<h4 id="考試指南"><a href="#考試指南" class="headerlink" title="考試指南"></a>考試指南</h4><p><a href="https://d0.awsstatic.com/training-and-certification/docs-sa-assoc/AWS_certified_solutions_architect_associate_blueprint.pdf" target="_blank" rel="external">考試指南</a></p>
+<h4 id="實作練習"><a href="#實作練習" class="headerlink" title="實作練習"></a>實作練習</h4><p><a href="https://qwiklabs.com/learning_paths/10/lab_catalogue" target="_blank" rel="external">qwiklabs</a></p>
+<h4 id="AWS-白皮書"><a href="#AWS-白皮書" class="headerlink" title="AWS 白皮書"></a>AWS 白皮書</h4><p><a href="https://aws.amazon.com/tw/whitepapers/" target="_blank" rel="external">AWS 白皮書</a>的特色是提供完整豐富的 AWS 技術類白皮書清單，內容涵蓋架構、安全性和成本等主題。<br>官方列舉出來的重點白皮書：</p>
+<ul>
+<li><a href="https://d0.awsstatic.com/whitepapers/AWS_Cloud_Best_Practices.pdf" target="_blank" rel="external">建立雲端架構：AWS 最佳實務</a><br>  為使用 AWS 服務建立設計解決方案架構提供規範指導。</li>
+<li><a href="https://d0.awsstatic.com/whitepapers/Security/AWS_Security_Best_Practices.pdf?refid=em_" target="_blank" rel="external">AWS 安全最佳實務</a><br>  使用 AWS 服務的安全權威指導。</li>
+<li><a href="http://d0.awsstatic.com/whitepapers/Security/AWS%20Security%20Whitepaper.pdf" target="_blank" rel="external">Amazon Web Services：安全程序概觀</a></li>
+<li><a href="https://d0.awsstatic.com/whitepapers/architecture/AWS_Well-Architected_Framework.pdf" target="_blank" rel="external">AWS 架構良好的結構</a><br>  驗證您架構框架的概觀。</li>
+<li><a href="http://media.amazonwebservices.com/AWS_Development_Test_Environments.pdf" target="_blank" rel="external">AWS 上的開發和測試</a><br>  使用 AWS 服務的軟體開發生命週期測試環境。</li>
+<li><a href="https://d0.awsstatic.com/whitepapers/Backup_Archive_and_Restore_Approaches_Using_AWS.pdf" target="_blank" rel="external">使用 AWS 的備份和復原方法</a><br>  建立符合 RTO 和 RPO 要求的備份與恢復解決方案的指導。</li>
+<li><a href="http://media.amazonwebservices.com/AWS_Amazon_VPC_Connectivity_Options.pdf" target="_blank" rel="external">Amazon Virtual Private Cloud 連線選項</a><br>  將 VPC 彼此連接以及連接到其他遠端網路。</li>
+<li><a href="http://d0.awsstatic.com/whitepapers/aws_pricing_overview.pdf" target="_blank" rel="external">AWS 定價如何運作</a><br>  使用 AWS 每月成本簡易計算器來估算每月 AWS 用量成本的指導。</li>
+</ul>
+<h4 id="AWS-常見問答集"><a href="#AWS-常見問答集" class="headerlink" title="AWS 常見問答集"></a>AWS 常見問答集</h4><p><a href="https://aws.amazon.com/tw/faqs/" target="_blank" rel="external">AWS 常見問答集</a><br>官方列舉出來的重點FAQ：</p>
+<ul>
+<li><a href="https://aws.amazon.com/tw/ec2/faqs/" target="_blank" rel="external">Amazon EC2</a></li>
+<li><a href="https://aws.amazon.com/tw/s3/faqs/" target="_blank" rel="external">Amazon S3</a></li>
+<li><a href="https://aws.amazon.com/tw/vpc/faqs/" target="_blank" rel="external">Amazon VPC</a></li>
+<li><a href="https://aws.amazon.com/tw/route53/faqs/" target="_blank" rel="external">Amazon Route 53</a></li>
+<li><a href="https://aws.amazon.com/tw/rds/faqs/" target="_blank" rel="external">Amazon RDS</a></li>
+<li><a href="https://aws.amazon.com/tw/sqs/faqs/" target="_blank" rel="external">Amazon SQS</a></li>
+</ul>
+<h4 id="參加練習考試"><a href="#參加練習考試" class="headerlink" title="參加練習考試"></a>參加練習考試</h4><p><a href="https://www.aws.training/certification?src=cert-prep" target="_blank" rel="external">練習考試</a></p>
+<h4 id="AWS-re-Invent"><a href="#AWS-re-Invent" class="headerlink" title="AWS re:Invent"></a>AWS re:Invent</h4><p>AWS 全球年度技術大會</p>
+<ul>
+<li><a href="https://www.youtube.com/channel/UCd6MoB9NC6uYN2grvUNT-Zg" target="_blank" rel="external">AWS Youtube Channel</a></li>
+<li><a href="https://www.slideshare.net/AmazonWebServices?utm_campaign=profiletracking&amp;utm_medium=sssite&amp;utm_source=ssslideview" target="_blank" rel="external">AWS Slideshare</a></li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://ken3527549.github.io/2017/09/14/AWS-Certified-Solutions-Architect-–-Associate/" data-id="cj8els5dl0007v0ussus5isdd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/09/14/AWS-Lambda實作筆記/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Lambda筆記
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/09/12/test-my-site/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">test_my_site</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/10/05/S3筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/10/05/S3筆記/" class="title">S3筆記</a></p>
+                            <p class="item-date"><time datetime="2017-10-05T13:32:42.000Z" itemprop="datePublished">2017-10-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/24/EC2筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/24/EC2筆記/" class="title">EC2筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-24T03:29:19.000Z" itemprop="datePublished">2017-09-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/24/RDS筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/24/RDS筆記/" class="title">RDS筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-24T01:36:12.000Z" itemprop="datePublished">2017-09-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/18/建立雲端架構：AWS-最佳實務/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/18/建立雲端架構：AWS-最佳實務/" class="title">建立雲端架構：AWS 最佳實務</a></p>
+                            <p class="item-date"><time datetime="2017-09-17T15:30:08.000Z" itemprop="datePublished">2017-09-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/17/VPC筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/17/VPC筆記/" class="title">VPC筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-17T05:34:42.000Z" itemprop="datePublished">2017-09-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">歸檔</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">10</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sdf/">sdf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whitepaper/">whitepaper</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤雲</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/AWS/" style="font-size: 20px;">AWS</a> <a href="/tags/sdf/" style="font-size: 10px;">sdf</a> <a href="/tags/whitepaper/" style="font-size: 10px;">whitepaper</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">連結</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 ken3527549<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

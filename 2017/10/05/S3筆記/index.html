@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>S3筆記 | ken3527549&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="S3簡介 Amazon S3 has a simple web services interface that you can use to store and retrieve any amount of data, at any time, from anywhere on the web. the core concepts of Amazon S3, such as buckets and">
+<meta name="keywords" content="AWS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="S3筆記">
+<meta property="og:url" content="https://ken3527549.github.io/2017/10/05/S3筆記/index.html">
+<meta property="og:site_name" content="ken3527549&#39;s Blog">
+<meta property="og:description" content="S3簡介 Amazon S3 has a simple web services interface that you can use to store and retrieve any amount of data, at any time, from anywhere on the web. the core concepts of Amazon S3, such as buckets and">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2017-10-05T14:46:03.639Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="S3筆記">
+<meta name="twitter:description" content="S3簡介 Amazon S3 has a simple web services interface that you can use to store and retrieve any amount of data, at any time, from anywhere on the web. the core concepts of Amazon S3, such as buckets and">
+    
+
+    
+        <link rel="alternate" href="/" title="ken3527549&#39;s Blog" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">ken3527549&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/smiley, ghost, happy, friendly, spirit, casper, halloween png icon.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: 'Pages',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/smiley, ghost, happy, friendly, spirit, casper, halloween png icon.png" />
+            <h2 id="name">ken3527549</h2>
+            <h3 id="title">Back-End Developer &amp; Designer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Taipei, Taiwan</span>
+            <a id="follow" target="_blank" href="">關注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                11
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                3
+                <span>標籤</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="/" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="youtube" class=tooltip>
+                            <i class="fa fa-youtube"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-S3筆記" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            S3筆記
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/10/05/S3筆記/">
+            <time datetime="2017-10-05T13:32:42.000Z" itemprop="datePublished">2017-10-05</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/AWS/">AWS</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="S3簡介"><a href="#S3簡介" class="headerlink" title="S3簡介"></a>S3簡介</h2><ul>
+<li>Amazon S3 has a simple web services interface that you can use to store and retrieve any amount of data, at any time, from anywhere on the web.</li>
+<li>the core concepts of Amazon S3, such as <strong>buckets and objects</strong>.</li>
+<li>創建buckets</li>
+<li>store and retrieve your objects</li>
+<li>manage permissions on your resources</li>
+<li>access control <ul>
+<li>defines who can access objects and buckets within Amazon S3, and the type of access (e.g., READ and WRITE).</li>
+</ul>
+</li>
+<li>authentication process<ul>
+<li>verifies the identity of a user who is trying to access Amazon Web Services (AWS).</li>
+</ul>
+</li>
+</ul>
+<h2 id="Advantages-to-Amazon-S3"><a href="#Advantages-to-Amazon-S3" class="headerlink" title="Advantages to Amazon S3"></a>Advantages to Amazon S3</h2><ul>
+<li>Create Buckets</li>
+<li>Store data in Buckets</li>
+<li>Download data</li>
+<li>Permissions </li>
+<li>Standard interfaces</li>
+</ul>
+<h2 id="Amazon-S3-Concepts"><a href="#Amazon-S3-Concepts" class="headerlink" title="Amazon S3 Concepts"></a>Amazon S3 Concepts</h2><ul>
+<li>Buckets<ul>
+<li>A bucket is a container for objects stored in Amazon S3.</li>
+<li>Every object is contained in a bucket.</li>
+<li>organize the Amazon S3 namespace at the highest level</li>
+<li>identify the account responsible for storage and data transfer charges</li>
+<li>play a role in access control</li>
+<li>serve as the unit of aggregation for usage reporting</li>
+</ul>
+</li>
+<li>Objects<ul>
+<li>Objects are the fundamental entities stored in Amazon S3</li>
+<li>consist of object data and metadata</li>
+<li>The data portion is opaque to Amazon S3</li>
+<li>The metadata is a set of name-value pairs that describe the object</li>
+<li>These include some default metadata, such as the date last modified, and standard HTTP metadata, such as Content-Type</li>
+<li>An object is uniquely identified within a bucket by a key (name) and a version ID</li>
+</ul>
+</li>
+<li>Keys<ul>
+<li>A key is the unique identifier for an object within a bucket</li>
+<li>Every object in a bucket has exactly one key</li>
+<li>S3 can be thought of as a basic data map between “bucket + key + version” and the object itself</li>
+<li>Every object in Amazon S3 can be uniquely addressed through the combination of the web service endpoint, bucket name, key, and optionally, a version</li>
+</ul>
+</li>
+<li>Regions<ul>
+<li>You might choose a region to optimize latency, minimize costs, or address regulatory requirements</li>
+<li>Objects stored in a region never leave the region unless you explicitly transfer them to another region</li>
+</ul>
+</li>
+<li><p>S3 Data Consistency Model</p>
+<ul>
+<li>Amazon S3 provides read-after-write consistency for PUTS of new objects in your S3 bucket in all regions with one caveat</li>
+<li>The caveat is that if you make a HEAD or GET request to the key name (to find if the object exists) before creating the object, Amazon S3 provides <strong>eventual consistency for read-after-write</strong>.(如果創建object前先用HEAD或GET檢查object存在與否，則S3將提供最終讀寫一致性)</li>
+<li>Amazon S3 offers eventual consistency for overwrite PUTS and DELETES in all regions.</li>
+<li>Updates to a single key are atomic(更新後讀取可能回傳舊的或新的數據，但不會寫入損壞或部分數據)</li>
+<li>Amazon S3 achieves high availability by replicating data across multiple servers within Amazon’s data centers.(因此可能會產生一些時間延遲)</li>
+</ul>
+</li>
+<li><p>Eventually Consistent Read</p>
+<ul>
+<li>Stale reads possible(可能過時讀取)</li>
+<li>Lowest read latency</li>
+<li>Highest read throughput</li>
+</ul>
+</li>
+<li>Consistent Read<ul>
+<li>No stale reads(無過時讀取)</li>
+<li>Potential higher read latency(潛在高延遲)</li>
+<li>Potential lower read throughput(潛在更低讀取吞吐量)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><ul>
+<li>Reduced Redundancy Storage(RRS)<ul>
+<li>RRS enables customers to reduce their costs by storing non-critical, reproducible data at lower levels of redundancy than Amazon S3 standard storage.</li>
+</ul>
+</li>
+<li>Bucket Policies</li>
+<li>AWS Identity and Access Management<ul>
+<li>can use IAM with Amazon S3 to control the type of access a user or group of users has to specific parts of an Amazon S3 bucket your AWS account owns.</li>
+</ul>
+</li>
+<li>Access Control Lists</li>
+<li>Versioning</li>
+<li>Operations<br>Following are the most common operations you’ll execute through the API.<ul>
+<li>Create a Bucket</li>
+<li>Write an Object</li>
+<li>Read an Object</li>
+<li>Deleting an Object</li>
+<li>Listing Keys</li>
+</ul>
+</li>
+<li>Bucket Configuration Options<ul>
+<li>location</li>
+<li>policy and ACL (Access Control List)</li>
+<li>cors (cross-origin resource sharing)</li>
+<li>website</li>
+<li>logging</li>
+<li>event notification</li>
+<li>versioning</li>
+<li>lifecycle</li>
+<li>cross-region replication</li>
+<li>tagging</li>
+<li>requestPayment</li>
+<li>transfer acceleration</li>
+</ul>
+</li>
+</ul>
+<p>參考<a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/Introduction.html" target="_blank" rel="external">Introduction</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://ken3527549.github.io/2017/10/05/S3筆記/" data-id="cj8els5do0008v0usex5bim5y" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/09/24/EC2筆記/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">EC2筆記</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/10/05/S3筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/10/05/S3筆記/" class="title">S3筆記</a></p>
+                            <p class="item-date"><time datetime="2017-10-05T13:32:42.000Z" itemprop="datePublished">2017-10-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/24/EC2筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/24/EC2筆記/" class="title">EC2筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-24T03:29:19.000Z" itemprop="datePublished">2017-09-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/24/RDS筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/24/RDS筆記/" class="title">RDS筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-24T01:36:12.000Z" itemprop="datePublished">2017-09-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/18/建立雲端架構：AWS-最佳實務/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/18/建立雲端架構：AWS-最佳實務/" class="title">建立雲端架構：AWS 最佳實務</a></p>
+                            <p class="item-date"><time datetime="2017-09-17T15:30:08.000Z" itemprop="datePublished">2017-09-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/17/VPC筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/17/VPC筆記/" class="title">VPC筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-17T05:34:42.000Z" itemprop="datePublished">2017-09-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">歸檔</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">10</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sdf/">sdf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whitepaper/">whitepaper</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤雲</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/AWS/" style="font-size: 20px;">AWS</a> <a href="/tags/sdf/" style="font-size: 10px;">sdf</a> <a href="/tags/whitepaper/" style="font-size: 10px;">whitepaper</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">連結</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 ken3527549<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

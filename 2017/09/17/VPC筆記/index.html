@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>VPC筆記 | ken3527549&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="VPC(Virtual Private Cloud) no hardware. no physical data centers. define your own network space and control your network. EC2 inside your network are exposed to the internet. provision a logically iso">
+<meta name="keywords" content="AWS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VPC筆記">
+<meta property="og:url" content="https://ken3527549.github.io/2017/09/17/VPC筆記/index.html">
+<meta property="og:site_name" content="ken3527549&#39;s Blog">
+<meta property="og:description" content="VPC(Virtual Private Cloud) no hardware. no physical data centers. define your own network space and control your network. EC2 inside your network are exposed to the internet. provision a logically iso">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://i.imgur.com/Pe6Mm7a.png">
+<meta property="og:image" content="https://i.imgur.com/4ilEcR6.png">
+<meta property="og:image" content="https://i.imgur.com/o03xuqd.png">
+<meta property="og:image" content="https://i.imgur.com/4ZVLxI8.png">
+<meta property="og:image" content="https://i.imgur.com/Y8q3YtG.png">
+<meta property="og:image" content="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/security-diagram.png">
+<meta property="og:image" content="http://docs.aws.amazon.com/zh_cn/AmazonVPC/latest/PeeringGuide/images/one-to-two-vpcs-flying-v.png">
+<meta property="og:updated_time" content="2017-09-24T04:06:04.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VPC筆記">
+<meta name="twitter:description" content="VPC(Virtual Private Cloud) no hardware. no physical data centers. define your own network space and control your network. EC2 inside your network are exposed to the internet. provision a logically iso">
+<meta name="twitter:image" content="https://i.imgur.com/Pe6Mm7a.png">
+    
+
+    
+        <link rel="alternate" href="/" title="ken3527549&#39;s Blog" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">ken3527549&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/smiley, ghost, happy, friendly, spirit, casper, halloween png icon.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: 'Pages',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/smiley, ghost, happy, friendly, spirit, casper, halloween png icon.png" />
+            <h2 id="name">ken3527549</h2>
+            <h3 id="title">Back-End Developer &amp; Designer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Taipei, Taiwan</span>
+            <a id="follow" target="_blank" href="">關注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                11
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                3
+                <span>標籤</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="/" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://youtube.com" target="_blank" title="youtube" class=tooltip>
+                            <i class="fa fa-youtube"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-VPC筆記" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            VPC筆記
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/09/17/VPC筆記/">
+            <time datetime="2017-09-17T05:34:42.000Z" itemprop="datePublished">2017-09-17</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/AWS/">AWS</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="VPC-Virtual-Private-Cloud"><a href="#VPC-Virtual-Private-Cloud" class="headerlink" title="VPC(Virtual Private Cloud)"></a>VPC(Virtual Private Cloud)</h2><ul>
+<li>no hardware.</li>
+<li>no physical data centers.</li>
+<li>define your own network space and control your network.</li>
+<li>EC2 inside your network are exposed to the internet.</li>
+<li>provision a logically isolated section of the Amazon Web Services.</li>
+<li>僅用於自己的AWS帳戶的虛擬網路，在邏輯上與AWS雲中的其他虛擬網路隔絕。</li>
+<li>可在VPC中啟動其他AWS資源。<br><img src="https://i.imgur.com/Pe6Mm7a.png" alt="AWS 允許使用者建立最大 x.y.0.0/16 的網路，因此一般都會設定為最普遍的 10.0.0.0/16"></li>
+</ul>
+<h2 id="使用案例"><a href="#使用案例" class="headerlink" title="使用案例"></a>使用案例</h2><ul>
+<li>VPC with a Single Public Subnet Only<br>您可以在 VPC 中託管部落格這類基本 Web 應用程式或簡單的網站，並獲得 Amazon VPC 提供的額外隱私權和安全性。您可以建立安全群組規則，在允許 Web 伺服器回應入站 HTTP 和 SSL 請求的同時，禁止該 Web 伺服器啟動存取網際網路的出站連接，以此鞏固網站的安全保護。<br><img src="https://i.imgur.com/4ilEcR6.png" alt="VPC with a Single Public Subnet Only"></li>
+<li>VPC with Public and Private Subnets<br>您可以使用 Amazon VPC 託管多層 Web 應用程式，在您的 Web 伺服器、應用程式伺服器和資料庫之間嚴格實施存取和安全限制。您可以在公眾可存取的子網路中啟動 Web 伺服器，而在非公眾存取的子網路中啟動應用程式伺服器和資料庫。這些應用程式伺服器和資料庫無法從網際網路直接存取，但它們依然可以透過 NAT 閘道存取網際網路，例如，下載修補程式等。您可以使用由網路存取控制清單和安全群組提供的對內和對外資料包篩選功能，控制伺服器和子網路之間的存取。<br><img src="https://i.imgur.com/o03xuqd.png" alt="VPC with Public and Private Subnets"></li>
+<li>VPC with Public and Private Subnets and Hardware VPN Access<br>您可以建立一個 VPC，其中一個子網路中的執行個體 (如 Web 伺服器) 可與網際網路通訊，而其他子網路中的執行個體 (如應用程式伺服器) 可與公司網路上的資料庫通訊。VPC 與公司網路之間的 IPsec VPN 連接，有助於保護雲端中的應用程式伺服器與資料中心內的資料庫之間進行的所有通訊。您的 VPC 中的 Web 伺服器和應用程式伺服器可以利用 Amazon EC2 的彈性功能和 Auto Scaling 功能，根據需要進行擴展和收縮。<br><img src="https://i.imgur.com/4ZVLxI8.png" alt="VPC with Public and Private Subnets and Hardware VPN Access"></li>
+<li>VPC with a Private Subnet Only and Hardware VPN Access<br>透過將 VPC 與公司網路連接，您可以將公司應用程式轉移到雲端中、啟動額外的 Web 伺服器，或者增加網路的運算容量。由於 VPC 可以託管在公司防火牆的後方，因此您可以將 IT 資源無縫遷移到雲端中，並且不必變更使用者對這些應用程式的存取方式。<br><img src="https://i.imgur.com/Y8q3YtG.png" alt="VPC with a Private Subnet Only and Hardware VPN Access"><br><a href="http://docs.aws.amazon.com/zh_cn/AmazonVPC/latest/UserGuide/VPC_Scenarios.html" target="_blank" rel="external">場景範例</a></li>
+</ul>
+<h4 id="影片"><a href="#影片" class="headerlink" title="影片"></a>影片</h4><p><a href="https://www.youtube.com/watch?v=jcyZmj6Ywh4&amp;list=PLhr1KZpdzukcMmx04RbtWuQ0yYOp1vQi4&amp;index=20" target="_blank" rel="external">Technical Introduction to Amazon VPC - Virtual Private Cloud on AWS</a></p>
+<h4 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h4><p><a href="https://aws.amazon.com/tw/vpc/faqs/" target="_blank" rel="external">VPC FAQ</a></p>
+<h2 id="VPC-or-Subnet-的-CIDR-Bloakc-Size-可以調整？"><a href="#VPC-or-Subnet-的-CIDR-Bloakc-Size-可以調整？" class="headerlink" title="VPC or Subnet 的 CIDR Bloakc Size 可以調整？"></a>VPC or Subnet 的 CIDR Bloakc Size 可以調整？</h2><p>  不可以。VPC 和 Subnet 的 CIDR 建立好之後就無法更動。</p>
+<h2 id="Public-Subnet-amp-Private-Subnet"><a href="#Public-Subnet-amp-Private-Subnet" class="headerlink" title="Public Subnet &amp; Private Subnet"></a>Public Subnet &amp; Private Subnet</h2><ul>
+<li>Public Subnet:<ul>
+<li>Subnet經路由到 Internet Gateway，稱為Public Subnet。</li>
+<li>Public Subnet中的Instance如需要通過IPv4與Internet通訊，該Subnet要有”Public IPv4 address” or “Elastic IP address (IPv4)”</li>
+</ul>
+</li>
+<li>Private Subnet:<ul>
+<li>Subnet沒有路由到 Internet Gateway，稱為Private Subnet。</li>
+<li>If a subnet doesn’t have a route to the internet gateway, but has its traffic routed to a virtual private gateway for a VPN connection, the subnet is known as a VPN-only subnet.</li>
+<li>Currently, we do not support IPv6 traffic over a VPN connection.<br><strong>每个子网都必须关联一个路由表，这个路由表可指定允许出站流量离开子网的可用路由。您创建的每个子网都会自动关联 VPC 的主路由表。</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>VPN connection</strong><br>VPN 組成:</p>
+<ul>
+<li>Virtual Private Gateway: A virtual private gateway is the VPN concentrator on the Amazon side of the VPN connection.</li>
+<li>Customer Gateway: A customer gateway is a physical device or software application on your side of the VPN connection.<br>參考<a href="http://docs.aws.amazon.com/zh_cn/AmazonVPC/latest/UserGuide/VPC_VPN.html" target="_blank" rel="external">VPC VPN</a></li>
+</ul>
+<p><strong>VPC subnet大小</strong></p>
+<ul>
+<li>VPC支援IPv4 and IPv6，並且有不同的CIDR大小限制。</li>
+<li>預設都有IPv4 CIDR，且不能更改。</li>
+<li>可選擇是否開啟IPv6 CIDR。</li>
+</ul>
+<p><strong>IPv4的subnet大小</strong></p>
+<ul>
+<li>The allowed block size is between a /16 netmask (65,536 IP addresses) and /28 netmask (16 IP addresses).</li>
+<li>The CIDR block of a subnet can be the same as the CIDR block for the VPC (for a single subnet in the VPC).</li>
+<li>If you create more than one subnet in a VPC, the CIDR blocks of the subnets cannot overlap.</li>
+</ul>
+<p><strong>The first four IP addresses and the last IP address in each subnet CIDR block are not available to use, and cannot be assigned to an instance.</strong><br>For example, in a subnet with CIDR block 10.0.0.0/24, the following five IP addresses are reserved:</p>
+<ul>
+<li>10.0.0.0: Network address.</li>
+<li>10.0.0.1: Reserved by AWS for the VPC router.</li>
+<li>10.0.0.2: Reserved by AWS. The IP address of the DNS server is always the base of the VPC network range plus two; however, we also reserve the base of each subnet range plus two. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR. For more information, see Amazon DNS Server.</li>
+<li>10.0.0.3: Reserved by AWS for future use.</li>
+<li>10.0.0.255: Network broadcast address. We do not support broadcast in a VPC, therefore we reserve this address.</li>
+</ul>
+<p><strong>VPC and Subnet Sizing for IPv6</strong></p>
+<ul>
+<li>The CIDR block uses a fixed prefix length of /56.</li>
+<li>You cannot choose the range of addresses or the IPv6 CIDR block size.</li>
+</ul>
+<p><strong>Subnet router table</strong></p>
+<ul>
+<li>每個subnet都要有一個router table。</li>
+<li>創建subnet時會自動關聯”主要(main)”router table。</li>
+</ul>
+<p><strong>What sort of security options do I have over my virtual network?</strong></p>
+<ul>
+<li>Create a <strong>public-facing subnet for your web servers</strong> that have access to the internet and place your backend systems such as databases or <strong>application servers in a private-facing subnet</strong> with no internet access.</li>
+</ul>
+<ul>
+<li>subnets<ul>
+<li>public: internet可存取</li>
+<li>private: 只有VPC內部的資源可以存取</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>internet gateways: 每個VPC限定一個</li>
+<li>route tables</li>
+</ul>
+<ul>
+<li>security group<ul>
+<li>概念像是一個虛擬防火牆，可控制<strong>實例</strong>出入站的數據流(traffic)。</li>
+</ul>
+</li>
+<li>network ACLs<ul>
+<li>可控制subnet的出入站數據流(traffic)。</li>
+<li>每個subnet必須與一個ACL關聯(創建subnet時會與預設ACL關聯)。</li>
+<li>VPC 建立時會自帶一個 default network ACL，並允許所有 inbound &amp; outbound 的流量。</li>
+<li>自訂的 network ACL，預設會拒絕所有 inbound &amp; outbound 的流量。</li>
+<li>當 subnet 與自訂的 network ACL 關聯時，原本的 network ACL 關聯就會移除 (每個 subnet 只能關聯一個 network ACL)。</li>
+<li>network ACL 的規則判定順序是以設定中的 Rule # 欄位中的數字為主，數字越小越早使用。</li>
+<li>network ACL 可設定 inbound &amp; outbound rules，且可設定 allow or deny (Security Group 只能設定 allow rule)。</li>
+<li>network ACL 是 stateless，因此設定規則時要同時考慮 inbound &amp; outbound rule (也就是要考慮 <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html#VPC_ACLs_Ephemeral_Ports" target="_blank" rel="external">ephemeral</a> ports 的設定)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>DHCP options sets</li>
+</ul>
+<p><strong>與本地網路的連接</strong></p>
+<ul>
+<li>本地與VPC IP地址重疊的部分會被捨棄無法使用。</li>
+</ul>
+<p>參考<a href="http://docs.aws.amazon.com/zh_cn/AmazonVPC/latest/UserGuide/VPC_Subnets.html#vpc-subnet-diagram" target="_blank" rel="external">VPC 和子網</a></p>
+<h2 id="Sercurity"><a href="#Sercurity" class="headerlink" title="Sercurity"></a>Sercurity</h2><p>VPC提供三種安全性和監控功能：</p>
+<ul>
+<li>Sercurity group</li>
+<li>Network access control lists (ACLs)</li>
+<li>Flow logs: Capture information about the IP traffic going to and from network interfaces in your VPC.</li>
+</ul>
+<p><strong>Comparison of Security Groups and Network ACLs</strong></p>
+<ul>
+<li>Network ACLs:<ul>
+<li>針對 VPC Subnet</li>
+<li>有 Allow / Deny</li>
+<li>Operates at the subnet level (second layer of defense)</li>
+<li>Is stateless: Return traffic must be explicitly allowed by rules</li>
+<li>We process rules in number order when deciding whether to allow traffic</li>
+<li>Automatically applies to all instances in the subnets it’s associated with (backup layer of defense, so you don’t have to rely on someone specifying the security group)</li>
+</ul>
+</li>
+<li>Security Group:<ul>
+<li>針對 EC2 Instance / ENI</li>
+<li>只有 Allow, 沒有 Deny</li>
+<li>Operates at the instance level (first layer of defense)</li>
+<li>Is stateful: Return traffic is automatically allowed, regardless of any rules</li>
+<li>We evaluate all rules before deciding whether to allow traffic</li>
+<li>Applies to an instance only if someone specifies the security group when launching the instance, or associates the security group with the instance later on<br><img src="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/security-diagram.png" alt="The layers of security provided by security groups and network ACLs"></li>
+</ul>
+</li>
+</ul>
+<p>參考<a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Security.html" target="_blank" rel="external">VPC Security</a></p>
+<h2 id="VPC-Networking-Components"><a href="#VPC-Networking-Components" class="headerlink" title="VPC Networking Components"></a>VPC Networking Components</h2><p><strong>You can use the following components to configure networking in your VPC:</strong></p>
+<ul>
+<li>Network Interfaces</li>
+<li>Route Tables</li>
+<li>Internet Gateways</li>
+<li>Egress-Only Internet Gateways</li>
+<li>DHCP Options Sets</li>
+<li>DNS</li>
+<li>Elastic IP Addresses</li>
+<li>VPC Endpoints</li>
+<li>NAT: 允許private subnet中的實例通過IPv4連接到Internet的出站連接，並阻止未經請求的Internet入站連接。</li>
+<li>VPC Peering</li>
+<li>ClassicLink</li>
+</ul>
+<p><strong>VPC Peering</strong></p>
+<ul>
+<li>Allow you to connect one VPC with another via a direct network route using private IP addresses.</li>
+<li>VPC 对等连接是两个 VPC 之间的网络连接，通过此连接，您可以使用私有 IPv4 地址或 IPv6 地址在两个 VPC 之间路由流量。这两个 VPC 中的实例可以彼此通信，就像它们在同一网络中一样。</li>
+<li><p>您可以在自己的 VPC 之间创建 VPC 对等连接，或者在自己的 VPC 与其他 AWS 账户中的 VPC 之间创建连接。在这两种情况下，VPC 都<strong>必须位于同一区域</strong>。</p>
+</li>
+<li><p>A VPC peering connection is a one to one relationship between two VPCs. You can create multiple VPC peering connections for each VPC that you own, but <strong>transitive peering relationships are not supported</strong>: you do not have any peering relationship with VPCs that your VPC is not directly peered with.<br><img src="http://docs.aws.amazon.com/zh_cn/AmazonVPC/latest/PeeringGuide/images/one-to-two-vpcs-flying-v.png" alt="如上圖所示，B &amp; C 無法透過 A 溝通，必須額外建立一個 peer 在 B &amp; C 之間才行"></p>
+</li>
+</ul>
+<p><strong>VPC Peering限制</strong></p>
+<ul>
+<li>You cannot create a VPC peering connection between VPCs in different regions.</li>
+<li>You cannot create a VPC peering connection between VPCs that have matching or overlapping IPv4 or IPv6 CIDR blocks.</li>
+<li>You have a limit on the number active and pending VPC peering connections that you can have per VPC.</li>
+<li>(無法藉由VPC peering關係peering到另一個無peering關係的VPC</li>
+<li>You cannot have more than one VPC peering connection between the same two VPCs at the same time.<br>參考<a href="http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/vpc-peering-basics.html" target="_blank" rel="external">PeeringGuide</a><br>參考<a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-peering.html" target="_blank" rel="external">UserGuide</a><br>參考<a href="http://docs.aws.amazon.com/zh_cn/AmazonVPC/latest/UserGuide/VPC_Networking.html" target="_blank" rel="external">VPC Networking</a></li>
+</ul>
+<h4 id="Bastion"><a href="#Bastion" class="headerlink" title="Bastion"></a>Bastion</h4><ul>
+<li>Bastion 其實就是個跳板的概念，讓外面的使用者可以透過 Internet 存取到位於 NAT gateway 後方的 resource<ul>
+<li>先連到 Bastion，再透過 private connection 連到內部的</li>
+</ul>
+</li>
+</ul>
+<h1 id="VPC使用限制"><a href="#VPC使用限制" class="headerlink" title="VPC使用限制"></a>VPC使用限制</h1>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://ken3527549.github.io/2017/09/17/VPC筆記/" data-id="cj8els5dw000iv0us3pyojnt5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/09/18/建立雲端架構：AWS-最佳實務/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    建立雲端架構：AWS 最佳實務
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/09/16/FB-圖形API/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">FB 圖形API</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/10/05/S3筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/10/05/S3筆記/" class="title">S3筆記</a></p>
+                            <p class="item-date"><time datetime="2017-10-05T13:32:42.000Z" itemprop="datePublished">2017-10-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/24/EC2筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/24/EC2筆記/" class="title">EC2筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-24T03:29:19.000Z" itemprop="datePublished">2017-09-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/24/RDS筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/24/RDS筆記/" class="title">RDS筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-24T01:36:12.000Z" itemprop="datePublished">2017-09-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/18/建立雲端架構：AWS-最佳實務/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/18/建立雲端架構：AWS-最佳實務/" class="title">建立雲端架構：AWS 最佳實務</a></p>
+                            <p class="item-date"><time datetime="2017-09-17T15:30:08.000Z" itemprop="datePublished">2017-09-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/09/17/VPC筆記/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/09/17/VPC筆記/" class="title">VPC筆記</a></p>
+                            <p class="item-date"><time datetime="2017-09-17T05:34:42.000Z" itemprop="datePublished">2017-09-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">歸檔</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">10</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/">AWS</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sdf/">sdf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whitepaper/">whitepaper</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤雲</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/AWS/" style="font-size: 20px;">AWS</a> <a href="/tags/sdf/" style="font-size: 10px;">sdf</a> <a href="/tags/whitepaper/" style="font-size: 10px;">whitepaper</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">連結</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 ken3527549<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
